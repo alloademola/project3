@@ -50,5 +50,69 @@ npm init
 <img width="1440" alt="Screenshot 2022-12-13 at 13 40 55" src="https://user-images.githubusercontent.com/118350020/207320835-231fc9ef-2627-4148-9fae-158e8d3694ed.png">
 
 so we need to run command ls to confirm that we have package.json file created.
+<img width="1440" alt="Screenshot 2022-12-13 at 13 56 38" src="https://user-images.githubusercontent.com/118350020/207324365-1fef99b9-c424-4cde-bf72-b6d8c661e948.png">
+done.
 
+Next step is to Install ExpressJs and create the Routes directory.
+
+To Install ExpressJS
+We need to Remember that, Express is a framework for Node.js, therefore a lot of things developers would have programmed is already taken care of out of the box. 
+In that case, it simplifies development, and abstracts a lot of low level details. 
+For example, Express helps us, to define routes of your application based on HTTP methods and URLs.
+
+To use express, we need to install it, using npm
+npm install express
+<img width="1440" alt="Screenshot 2022-12-13 at 14 12 28" src="https://user-images.githubusercontent.com/118350020/207327447-921cf945-6bfe-4820-8ca3-d93c5ee741de.png">
+
+Now we are going to Now create a file called  index.js with the command below
+
+touch index.js
+and after that, we need 
+Run ls to confirm that our index.js file is successfully created
+
+<img width="1440" alt="Screenshot 2022-12-13 at 14 17 46" src="https://user-images.githubusercontent.com/118350020/207328342-c6cb47dd-0bac-40fa-ab4d-fdc9622431a1.png">
+Now we are going to, Install the dotenv module using the command below.
+npm install dotenv
+
+<img width="1440" alt="Screenshot 2022-12-13 at 14 19 57" src="https://user-images.githubusercontent.com/118350020/207328885-06903c14-6ad7-4036-968b-6a598371e606.png">
+
+now we are going to 
+Open the index.js file with the command below
+vim index.js
+
+<img width="1440" alt="Screenshot 2022-12-13 at 14 31 44" src="https://user-images.githubusercontent.com/118350020/207335834-127aca3c-5ca1-4797-bed8-ed543a6d604e.png">
+Type the code below into it and save.
+
+const express = require('express');
+require('dotenv').config();
+
+const app = express();
+
+const port = process.env.PORT || 5000;
+
+app.use((req, res, next) => {
+res.header("Access-Control-Allow-Origin", "\*");
+res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+next();
+});
+
+app.use((req, res, next) => {
+res.send('Welcome to Express');
+});
+
+app.listen(port, () => {
+console.log(`Server running on port ${port}`)
+});
+
+<img width="1440" alt="Screenshot 2022-12-13 at 14 36 49" src="https://user-images.githubusercontent.com/118350020/207337929-b14a1462-1126-487f-bd05-48055e0d471c.png">
+
+Notice that we have specified to use port 5000 in the code. This will be required later when we go on the browser.
+
+Use :w to save in vim and use :qa to exit vim
+
+Now it is time to start our server to see if it works. Open your terminal in the same directory as your index.js file and type:
+so we are using the command below
+node index.js
+
+<img width="1440" alt="Screenshot 2022-12-13 at 14 40 56" src="https://user-images.githubusercontent.com/118350020/207340935-393afb98-e62b-4fe3-bbf7-f18ee186d76d.png">
 
