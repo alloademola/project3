@@ -125,4 +125,127 @@ so youu will get this outcome below
 
 <img width="1440" alt="Screenshot 2022-12-14 at 12 00 52" src="https://user-images.githubusercontent.com/118350020/207578105-08d7eaed-2534-4cce-8477-2a222f9d77e0.png">
 
-app.use((req, res, next) => {
+next step is 
+Routes
+There are three actions that our To-Do application needs to be able to do:
+
+Create a new task
+Display list of all tasks
+Delete a completed task
+Each task will be associated with some particular endpoint and will use different standard HTTP request methods: POST, GET, DELETE.
+
+For each task, we need to create routes that will define various endpoints that the To-do app will depend on. So let us create a folder routes
+Now run this command below
+
+mkdir routes
+
+<img width="1440" alt="Screenshot 2022-12-14 at 12 16 26" src="https://user-images.githubusercontent.com/118350020/207581397-c29049f7-2f92-4135-9a62-0ebbb0777e12.png">
+
+You can as well, open multiple shells in Putty or Linux/Mac to connect to the same EC2
+
+Change directory to routes folder.
+so use these command below
+
+cd routes
+
+so after that, you can now, create a file api.js with the command below
+
+touch api.js
+
+so thereafter, you can now open the file below
+
+vim api.js
+
+<img width="1440" alt="Screenshot 2022-12-14 at 12 21 46" src="https://user-images.githubusercontent.com/118350020/207582482-af975a80-0733-48fc-8e64-f79de3dd33e3.png">
+
+Copy below code in the file.
+
+const express = require ('express');
+const router = express.Router();
+
+router.get('/todos', (req, res, next) => {
+
+});
+
+router.post('/todos', (req, res, next) => {
+
+});
+
+router.delete('/todos/:id', (req, res, next) => {
+
+})
+
+module.exports = router;
+
+So moving forward ,let create Models directory.
+
+MODELS
+Now comes the interesting part, since the app is going to make use of Mongodb which is a NoSQL database, we need to create a model.
+
+A model is at the heart of JavaScript based applications, and it is what makes it interactive.
+
+We will also use models to define the database schema . This is important so that we will be able to define the fields stored in each Mongodb document. (Seems like a lot of information, but not to worry, everything will become clear to you over time. I promise!!!)
+
+In essence, the Schema is a blueprint of how the database will be constructed, including other data fields that may not be required to be stored in the database. These are known as virtual properties
+
+To create a Schema and a model, install mongoose which is a Node.js package that makes working with mongodb easier.
+
+Change directory back Todo folder with cd .. and install Mongoose
+
+So after changing your Folder back to Todo, now run this command below to install Mongoose
+
+npm install mongoose
+
+<img width="1440" alt="Screenshot 2022-12-14 at 12 40 17" src="https://user-images.githubusercontent.com/118350020/207585866-970775af-06d0-46cd-94cb-0ba7c88f231f.png">
+
+Now Create a new folder models :
+Using this command below
+
+mkdir models
+<img width="1440" alt="Screenshot 2022-12-14 at 12 44 45" src="https://user-images.githubusercontent.com/118350020/207586940-ad683e68-4510-4249-82f0-711361a59252.png">
+
+MODELS
+ next step is Change the directory into the newly created ‘models’ folder with
+ cd models
+ 
+ <img width="1440" alt="Screenshot 2022-12-14 at 12 49 12" src="https://user-images.githubusercontent.com/118350020/207587945-13e35c1f-2b61-4c70-abc4-023de8b19ff1.png">
+
+So Inside the models folder, we are going to create a file and name it todo.js with the command below
+
+touch todo.js
+<img width="1440" alt="Screenshot 2022-12-14 at 12 51 27" src="https://user-images.githubusercontent.com/118350020/207588296-c8c47128-d6dd-43ef-af48-54fdc185e8e5.png">
+
+Note: All the three commands above, can be defined in one line, to be executed consequently with help of && operator, like this:
+mkdir models && cd models && touch todo.js
+
+Open the file created with vim todo.js then paste the code below in the file:
+
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+//create schema for todo
+const TodoSchema = new Schema({
+action: {
+type: String,
+required: [true, 'The todo text field is required']
+}
+})
+
+//create model for todo
+const Todo = mongoose.model('todo', TodoSchema);
+
+module.exports = Todo;
+
+<img width="1440" alt="Screenshot 2022-12-14 at 13 00 12" src="https://user-images.githubusercontent.com/118350020/207590188-6dcbf7c7-39fe-45af-ae58-ba9bf33643a6.png">
+
+Now we are going to update our routes from the file api.js in ‘routes’ directory to make use of the new model.
+
+In Routes directory, open api.js with vim api.js, delete the code inside with :%d command and paste there code below into it then save and exit
+
+we are using this command below
+
+vim api.js
+
+<img width="1440" alt="Screenshot 2022-12-14 at 13 12 28" src="https://user-images.githubusercontent.com/118350020/207592358-d390e7e1-8da5-4056-9834-bef17148deca.png">
+
+so now, we are going to 
