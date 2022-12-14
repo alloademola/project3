@@ -248,4 +248,42 @@ vim api.js
 
 <img width="1440" alt="Screenshot 2022-12-14 at 13 12 28" src="https://user-images.githubusercontent.com/118350020/207592358-d390e7e1-8da5-4056-9834-bef17148deca.png">
 
-so now, we are going to 
+so now, we are going to paste the code below into it then save and exit
+
+const express = require ('express');
+const router = express.Router();
+const Todo = require('../models/todo');
+
+router.get('/todos', (req, res, next) => {
+
+//this will return all the data, exposing only the id and action field to the client
+Todo.find({}, 'action')
+.then(data => res.json(data))
+.catch(next)
+});
+
+router.post('/todos', (req, res, next) => {
+if(req.body.action){
+Todo.create(req.body)
+.then(data => res.json(data))
+.catch(next)
+}else {
+res.json({
+error: "The input field is empty"
+})
+}
+});
+
+router.delete('/todos/:id', (req, res, next) => {
+Todo.findOneAndDelete({"_id": req.params.id})
+.then(data => res.json(data))
+.catch(next)
+})
+
+module.exports = router;
+
+<img width="1440" alt="Screenshot 2022-12-14 at 13 51 21" src="https://user-images.githubusercontent.com/118350020/207600192-a5633d00-f463-4222-badf-f065c8148dfa.png">
+
+ 
+The next piece of our application will be the MongoDB Database.
+
