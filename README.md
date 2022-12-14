@@ -116,3 +116,13 @@ node index.js
 
 <img width="1440" alt="Screenshot 2022-12-13 at 14 40 56" src="https://user-images.githubusercontent.com/118350020/207340935-393afb98-e62b-4fe3-bbf7-f18ee186d76d.png">
 
+Now we need to open this port in EC2 Security Groups. Refer to Project 1 Step 1 – Installing the Nginx Web Server. There we created an inbound rule to open TCP port 80, you need to do the same for port 5000, like this:
+
+<img width="1440" alt="Screenshot 2022-12-14 at 11 59 25" src="https://user-images.githubusercontent.com/118350020/207577721-084d6608-ac31-4f6a-9583-ea089ae0007e.png">
+
+Now Open up your browser and try to access your server’s Public IP or Public DNS name followed by port 5000:
+so youu will get this outcome below
+
+<img width="1440" alt="Screenshot 2022-12-14 at 12 00 52" src="https://user-images.githubusercontent.com/118350020/207578105-08d7eaed-2534-4cce-8477-2a222f9d77e0.png">
+
+app.use((req, res, next) => {
