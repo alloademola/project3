@@ -287,3 +287,145 @@ module.exports = router;
  
 The next piece of our application will be the MongoDB Database.
 
+<img width="1440" alt="Screenshot 2022-12-21 at 16 54 35" src="https://user-images.githubusercontent.com/118350020/208948614-0279db4c-3551-4914-a0e2-1115d1e2e350.png">
+
+now we are moving to frontend
+
+Step 2 – Frontend creation
+Since we are done with the functionality .
+it is time to create a user interface for a Web client (browser) to interact with the application via API. To start out with the frontend of the To-do app, we will use the create-react-app command to scaffold our app.
+
+In the same root directory as your backend code, which is the Todo directory
+
+now we are runnning this command below
+npx create-react-app client
+<img width="1440" alt="Screenshot 2022-12-21 at 17 05 17" src="https://user-images.githubusercontent.com/118350020/208949700-f43c8880-47b6-49d6-82f5-86d4acf4a04d.png">
+ 
+So this will create a new folder into our Todo directory called client, where you will add all the react code.
+
+Running a React App
+Before testing the react app, there are some dependencies that need to be installed.
+
+Install concurrently. It is used to run more than one command simultaneously from the same terminal window.
+so we are using this terminal below
+
+ 1 : npm install concurrently --save-dev
+<img width="1440" alt="Screenshot 2022-12-21 at 17 15 47" src="https://user-images.githubusercontent.com/118350020/208951825-38d98cf8-eee0-4440-8521-0fa8895843b5.png">
+
+2: Install nodemon. It is used to run and monitor the server. If there is any change in the server code, nodemon will restart it automatically and load the new changes. use this command below
+
+npm install nodemon --save-dev
+
+<img width="1440" alt="Screenshot 2022-12-21 at 17 19 21" src="https://user-images.githubusercontent.com/118350020/208953466-bb87ce4b-cf42-46d1-9c3f-058a5c588895.png">
+
+3: So in our Todo folder, open the package.json file. 
+Change the highlighted part of the below screenshot and replace with the code below.
+
+"scripts": {
+"start": "node index.js",
+"start-watch": "nodemon index.js",
+"dev": "concurrently \"npm run start-watch\" \"cd client && npm start\""
+},
+
+<img width="1440" alt="Screenshot 2022-12-21 at 17 39 01" src="https://user-images.githubusercontent.com/118350020/208957991-5626359b-0029-400b-8319-9951a531987a.png">
+
+},
+
+so now, we are going to Configure Proxy in package.json
+1 : change your directory to ‘client’ using the command below
+
+cd client
+2: Open the package.json file with the command below
+vi package.json
+
+3: So Add the key value pair in the package.json file "proxy": "http://localhost:5000".
+<img width="1440" alt="Screenshot 2022-12-21 at 17 55 46" src="https://user-images.githubusercontent.com/118350020/208961479-78ab28b2-2e58-4149-bbd8-b4ebba86302e.png">
+
+Now Now, ensure you are inside the Todo directory, and simply do:
+
+npm run dev
+<img width="1440" alt="Screenshot 2022-12-21 at 18 15 30" src="https://user-images.githubusercontent.com/118350020/208965137-ed57518e-1348-47a5-9daf-21577b298664.png">
+
+so your app should open and start running on localhost:3000
+
+Important note: In order to be able to access the application from the Internet you have to open TCP port 3000 on EC2 by adding a new Security Group rule. You already know how to do it.
+
+<img width="1440" alt="Screenshot 2022-12-21 at 18 11 32" src="https://user-images.githubusercontent.com/118350020/208965270-022e55b9-9d66-40d6-a397-85333643109b.png">
+
+So now , we are going to Creating our React Components
+One of the advantages of react is that it makes use of components, which are reusable and also makes code modular. For our Todo app, there will be two stateful components and one stateless component.
+From your Todo directory run
+
+cd client
+
+so you will move to the src directory,  using the command below
+
+cd src
+So inisde your src folder create another folder called components, using this command below
+
+mkdir components
+
+so now, you will Move into the components directory with
+
+cd components
+
+right Inside your  ‘components’ directory create three files Input.js, ListTodo.js and Todo.js with the command below
+
+touch Input.js ListTodo.js Todo.js
+
+now Open Input.js file with this command
+vi Input.js
+
+<img width="1440" alt="Screenshot 2022-12-21 at 18 34 35" src="https://user-images.githubusercontent.com/118350020/208968605-6c4000a1-24c3-4839-b7b4-31e60038f66c.png">
+
+Copy and paste the following
+
+import React, { Component } from 'react';
+import axios from 'axios';
+
+class Input extends Component {
+
+state = {
+action: ""
+}
+
+addTodo = () => {
+const task = {action: this.state.action}
+
+    if(task.action && task.action.length > 0){
+      axios.post('/api/todos', task)
+        .then(res => {
+          if(res.data){
+            this.props.getTodos();
+            this.setState({action: ""})
+          }
+        })
+        .catch(err => console.log(err))
+    }else {
+      console.log('input field required')
+    }
+
+}
+
+handleChange = (e) => {
+this.setState({
+action: e.target.value
+})
+}
+
+render() {
+let { action } = this.state;
+return (
+<div>
+<input type="text" onChange={this.handleChange} value={action} />
+<button onClick={this.addTodo}>add todo</button>
+</div>
+)
+}
+}
+
+export default Input
+
+
+<img width="1440" alt="Screenshot 2022-12-21 at 18 39 08" src="https://user-images.githubusercontent.com/118350020/208969391-6e3987e8-f8e5-44ee-9822-1db15b9742a9.png">
+
