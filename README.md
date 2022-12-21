@@ -429,3 +429,300 @@ export default Input
 
 <img width="1440" alt="Screenshot 2022-12-21 at 18 39 08" src="https://user-images.githubusercontent.com/118350020/208969391-6e3987e8-f8e5-44ee-9822-1db15b9742a9.png">
 
+<img width="1440" alt="Screenshot 2022-12-21 at 18 39 17" src="https://user-images.githubusercontent.com/118350020/208969740-722b6b35-5450-4198-850e-facdc70d36a1.png">
+
+Now, we are going to to make use of Axios, which is a Promise based HTTP client for the browser and node.js, you need to cd into your client from your terminal and run yarn add axios or npm install axios.
+
+Move to the src folder with the below command
+
+cd ..
+
+Move to clients folder with the below command
+
+cd ..
+
+now Install Axios with this command below
+
+npm install axios
+
+<img width="1440" alt="Screenshot 2022-12-21 at 18 46 09" src="https://user-images.githubusercontent.com/118350020/208970883-1cb9fbf5-f625-4db3-b6d3-2a111bd15a5e.png">
+ Now go to ‘components’ directory , using this command below
+
+cd src/components
+
+After that , open your ListTodo.js with this command below
+
+vi ListTodo.js
+<img width="1440" alt="Screenshot 2022-12-21 at 18 59 49" src="https://user-images.githubusercontent.com/118350020/208973078-242e83df-9f79-4326-bc60-a984db615376.png">
+
+in the ListTodo.js copy and paste the following code
+
+import React from 'react';
+
+const ListTodo = ({ todos, deleteTodo }) => {
+
+return (
+<ul>
+{
+todos &&
+todos.length > 0 ?
+(
+todos.map(todo => {
+return (
+<li key={todo._id} onClick={() => deleteTodo(todo._id)}>{todo.action}</li>
+)
+})
+)
+:
+(
+<li>No todo(s) left</li>
+)
+}
+</ul>
+)
+}
+
+export default ListTodo
+
+
+<img width="1440" alt="Screenshot 2022-12-21 at 19 03 45" src="https://user-images.githubusercontent.com/118350020/208973643-c1e85409-ea5f-4098-b642-1baac3fe1c38.png">
+
+so in your Todo.js file you write the following code below
+import React, {Component} from 'react';
+import axios from 'axios';
+
+import Input from './Input';
+import ListTodo from './ListTodo';
+
+class Todo extends Component {
+
+state = {
+todos: []
+}
+
+componentDidMount(){
+this.getTodos();
+}
+
+getTodos = () => {
+axios.get('/api/todos')
+.then(res => {
+if(res.data){
+this.setState({
+todos: res.data
+})
+}
+})
+.catch(err => console.log(err))
+}
+
+deleteTodo = (id) => {
+
+    axios.delete(`/api/todos/${id}`)
+      .then(res => {
+        if(res.data){
+          this.getTodos()
+        }
+      })
+      .catch(err => console.log(err))
+
+}
+
+render() {
+let { todos } = this.state;
+
+    return(
+      <div>
+        <h1>My Todo(s)</h1>
+        <Input getTodos={this.getTodos}/>
+        <ListTodo todos={todos} deleteTodo={this.deleteTodo}/>
+      </div>
+    )
+
+}
+}
+
+export default Todo; 
+
+<img width="1440" alt="Screenshot 2022-12-21 at 19 10 27" src="https://user-images.githubusercontent.com/118350020/208974973-5580f3db-5f48-491f-a56b-8919b3d0c07a.png">
+
+}
+<img width="1440" alt="Screenshot 2022-12-21 at 19 13 23" src="https://user-images.githubusercontent.com/118350020/208975304-c383041b-f4a5-474b-87fb-7f051cb0c2ee.png">
+}
+
+<img width="1440" alt="Screenshot 2022-12-21 at 19 14 05" src="https://user-images.githubusercontent.com/118350020/208975379-004b82d4-4deb-4653-abed-8535d3cf9254.png">
+
+}
+
+Now we are going to make alittle adjustment to our react code. 
+so you will Delete the logo and adjust our App.js to look like this.
+
+so Move to the src folder with the command. below
+
+cd ..
+
+Make sure that you are in the src folder and run this command below
+
+vi App.js
+
+<img width="1440" alt="Screenshot 2022-12-21 at 19 18 54" src="https://user-images.githubusercontent.com/118350020/208976147-57f7b79b-d79b-430e-b4c4-175feca5912d.png">
+
+so Copy and paste the code below into it
+
+import React from 'react';
+
+import Todo from './components/Todo';
+import './App.css';
+
+const App = () => {
+return (
+<div className="App">
+<Todo />
+</div>
+);
+}
+
+export default App;
+
+<img width="1440" alt="Screenshot 2022-12-21 at 19 22 35" src="https://user-images.githubusercontent.com/118350020/208976748-8ae11c1a-dc0d-47dd-80c5-6ac347c4efb9.png">
+
+so After pasting, exit the editor.
+
+In the src directory open the App.css with the below command
+
+vi App.css
+
+Then paste the following code into App.css:
+
+.App {
+text-align: center;
+font-size: calc(10px + 2vmin);
+width: 60%;
+margin-left: auto;
+margin-right: auto;
+}
+
+input {
+height: 40px;
+width: 50%;
+border: none;
+border-bottom: 2px #101113 solid;
+background: none;
+font-size: 1.5rem;
+color: #787a80;
+}
+
+input:focus {
+outline: none;
+}
+
+button {
+width: 25%;
+height: 45px;
+border: none;
+margin-left: 10px;
+font-size: 25px;
+background: #101113;
+border-radius: 5px;
+color: #787a80;
+cursor: pointer;
+}
+
+button:focus {
+outline: none;
+}
+
+ul {
+list-style: none;
+text-align: left;
+padding: 15px;
+background: #171a1f;
+border-radius: 5px;
+}
+
+li {
+padding: 15px;
+font-size: 1.5rem;
+margin-bottom: 15px;
+background: #282c34;
+border-radius: 5px;
+overflow-wrap: break-word;
+cursor: pointer;
+}
+
+@media only screen and (min-width: 300px) {
+.App {
+width: 80%;
+}
+
+input {
+width: 100%
+}
+
+button {
+width: 100%;
+margin-top: 15px;
+margin-left: 0;
+}
+}
+
+@media only screen and (min-width: 640px) {
+.App {
+width: 60%;
+}
+
+input {
+width: 50%;
+}
+
+button {
+width: 30%;
+margin-left: 10px;
+margin-top: 0;
+}
+}
+
+
+<img width="1440" alt="Screenshot 2022-12-21 at 19 46 01" src="https://user-images.githubusercontent.com/118350020/208980713-05350925-3985-4b4e-97aa-a933c9400d42.png">
+
+so In the src directory open the index.css with the command below
+
+vim index.css
+
+Copy and paste the code below:
+
+body {
+margin: 0;
+padding: 0;
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+"Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+sans-serif;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+box-sizing: border-box;
+background-color: #282c34;
+color: #787a80;
+}
+
+code {
+font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+monospace;
+}
+
+<img width="1440" alt="Screenshot 2022-12-21 at 19 51 36" src="https://user-images.githubusercontent.com/118350020/208981560-35f59fb8-9a46-425c-9051-5a0923e9db56.png">
+
+Go to the Todo directory
+
+cd ../..
+When you are in the Todo directory run:
+
+npm run dev
+Assuming no errors when saving all these files, our To-Do app should be ready and fully functional with the functionality discussed earlier: creating a task, deleting a task and viewing all your tasks.
+
+<img width="1440" alt="Screenshot 2022-12-21 at 19 55 31" src="https://user-images.githubusercontent.com/118350020/208982185-25c1ce99-7b55-46f3-9633-91ace17c8ced.png">
+
+<img width="1440" alt="Screenshot 2022-12-21 at 19 55 55" src="https://user-images.githubusercontent.com/118350020/208982327-20e54c32-91d1-4963-a7e4-94a7a61dc38b.png">
+
+<img width="1440" alt="Screenshot 2022-12-21 at 19 56 58" src="https://user-images.githubusercontent.com/118350020/208982447-446ee590-5d18-4b2e-b31a-6f5fdbc27c9b.png">
+
+finish.
